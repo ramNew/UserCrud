@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { patch } from "axios";
+import { editUser } from "../../services";
 import { setUser, replaceUser } from "../../actions";
 
 function UserEdit(props) {
@@ -15,10 +15,7 @@ function UserEdit(props) {
   function handleSubmit(event) {
     event.preventDefault();
     if (!user.username || !user.content) return;
-    patch(`/api/users/${user._id}`, {
-      name: user.username,
-      content: user.content,
-    })
+    dispatch(editUser(user._id, user.username, user.content))
       .then(function (response) {
         dispatch(setUser(user));
         dispatch(replaceUser(user));

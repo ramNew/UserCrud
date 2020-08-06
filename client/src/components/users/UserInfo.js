@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import { setUserView } from "../../services";
+import { deleteUser } from "../../services";
 import { Link } from "react-router-dom";
 import { setUser, removeUser } from "../../actions";
 
@@ -10,8 +11,7 @@ function UserInfo(props) {
 
   useEffect(
     function () {
-      axios
-        .get(`/api/users/${props.match.params._id}`)
+      dispatch(setUserView(props.match.params._id))
         .then(function (response) {
           dispatch(setUser(response.data));
         })
@@ -23,8 +23,7 @@ function UserInfo(props) {
   );
 
   function handleDelete() {
-    axios
-      .delete(`/api/users/${user._id}`)
+    dispatch(deleteUser(user._id))
       .then(function () {
         dispatch(removeUser(user._id));
         props.history.push("/");

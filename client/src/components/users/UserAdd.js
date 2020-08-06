@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { post } from "axios";
+import { postUser } from "../../services";
 import { addUser } from "../../actions";
 
 function UserAdd(props) {
@@ -15,7 +15,7 @@ function UserAdd(props) {
   function handleSubmit(event) {
     event.preventDefault();
     if (!user.username || !user.content) return;
-    post("/api/users", { name: user.username, content: user.content })
+    dispatch(postUser(user.username, user.content))
       .then(function (response) {
         dispatch(addUser(response.data));
       })
